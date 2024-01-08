@@ -88,3 +88,24 @@ const fooReadOnly: FooReadOnly = {
 // typeof
 const commandList = ['foo', 'bar', 'baz'] as const;
 type Command = (typeof commandList)[number];
+
+// 3.3.1
+// 部分型
+type FooBar = {
+  foo: number;
+  bar: string;
+};
+type FooBarBaz = {
+  foo: number;
+  bar: string;
+  baz: boolean;
+};
+const fooBarBaz: FooBarBaz = {
+  foo: 123,
+  bar: 'hello',
+  baz: true,
+};
+const fooBar: FooBar = fooBarBaz; // FooBarBazはFooBarの部分型である
+// FooBarBaz型はFooBar型の上位互換であり、これを部分型と呼ぶ
+// TypeScriptのにおける部分型関係は、構造的部分型と呼ばれる
+// 一方、名前的部分型というものもあるが、TypeScriptではサポートされていない
