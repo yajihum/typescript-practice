@@ -109,3 +109,54 @@ const fooBar: FooBar = fooBarBaz; // FooBarBazはFooBarの部分型である
 // FooBarBaz型はFooBar型の上位互換であり、これを部分型と呼ぶ
 // TypeScriptのにおける部分型関係は、構造的部分型と呼ばれる
 // 一方、名前的部分型というものもあるが、TypeScriptではサポートされていない
+
+// 3.4.1
+// 型引数を持つ型
+type User<T> = {
+  name: string;
+  child: T;
+};
+// 以下のように複数の型引数を持つこともできる
+type Family<Parent, Child> = {
+  father: Parent;
+  mother: Parent;
+  child: Child;
+};
+
+// 3.4.2
+// 型引数を持つ型を使用する
+const obj8: Family<number, string> = {
+  father: 123,
+  mother: 456,
+  child: '1000',
+};
+
+// 3.4.3
+// 型引数に部分型を指定する場合
+type HasName = {
+  name: string;
+};
+// ParetやChildはHasName型の部分型である必要がある
+type Family2<Parent extends HasName, Child extends HasName> = {
+  father: Parent;
+  mother: Parent;
+  child: Child;
+};
+
+type Animal = {
+  name: string;
+};
+type Human = {
+  name: string;
+  age: number;
+};
+type T = Family2<Animal, Human>; // OK
+
+// 3.4.4
+// オプショナルな型引数
+// 型が指定されなかった場合はAnimalのデフォルトの型になる
+type Family3<Parent = Animal, Child = Animal> = {
+  father: Parent;
+  mother: Parent;
+  child: Child;
+};
