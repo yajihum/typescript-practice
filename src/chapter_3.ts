@@ -160,3 +160,21 @@ type Family3<Parent = Animal, Child = Animal> = {
   mother: Parent;
   child: Child;
 };
+
+// 3.5.2
+// 配列もオブジェクトの一種
+const arr = [0, 123, -456];
+console.log(arr[0]);
+console.log(arr['2']); // これもOK
+
+// 3.5.3
+// 配列型の宣言
+const arr1: number[] = [11, 20];
+const arr2: Array<{ name: string }> = [{ name: 'Jack' }, { name: 'Jane' }];
+
+// 3.5.7
+// タプル型
+// タプル型とは、要素数が固定さている代わりに配列のそれぞれの要素に異なる型を指定できるもの
+const tuple: [number, string] = [123, 'hello'];
+const [t1, t2] = tuple; // t1はnumber型、t2はstring型になる
+// useStateとかもタプル型を使用している
