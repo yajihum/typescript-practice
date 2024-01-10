@@ -178,3 +178,25 @@ const arr2: Array<{ name: string }> = [{ name: 'Jack' }, { name: 'Jane' }];
 const tuple: [number, string] = [123, 'hello'];
 const [t1, t2] = tuple; // t1はnumber型、t2はstring型になる
 // useStateとかもタプル型を使用している
+
+// 3.6.1
+// 分割代入
+const obj9 = { foo: 'hello', bar: 3, 'foo-bar': true };
+const { foo, bar: barVar, 'foo-bar': foo_Bar } = obj9; // 識別子で書けないプロパティ名もこのようにかける
+
+// 3.6.3
+// 配列の分割代入
+const arr3 = ['a', 'b', 'c'];
+const [first, second, third] = arr3;
+console.log(first, second, third); // a b c
+
+const arr4 = { arr: arr3 };
+const {
+  arr: [foo1],
+} = arr4;
+console.log(foo1); // a
+
+const [, , third1] = arr3; // これも可
+
+const tupleArray: [string, number] = ['a', 123];
+const [tuple1, tuple2] = tupleArray; // tuple1はstring型、tuple2はnumber型になる
