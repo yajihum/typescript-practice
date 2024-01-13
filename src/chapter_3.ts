@@ -200,3 +200,18 @@ const [, , third1] = arr3; // これも可
 
 const tupleArray: [string, number] = ['a', 123];
 const [tuple1, tuple2] = tupleArray; // tuple1はstring型、tuple2はnumber型になる
+
+// 3.6.4
+// 分割代入のデフォルト値
+type obj10Type = { foo_10?: number };
+const obj10: obj10Type = {};
+const { foo_10 = 1 } = obj10; // fooがundefinedの場合は1が代入される
+const { foo_10: foo2 = 1 } = obj10; // fooがundefinedの場合は1が代入される
+// デフォルト値はundefinedの場合にのみ代入される（nullは適用されないことに気をつける）
+
+// 3.7.4
+// Mapオブジェクト
+const map = new Map<string, number>();
+map.set('foo', 123);
+console.log(map.get('foo')); // 123
+console.log(map.get('bar')); // undefined
