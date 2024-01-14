@@ -4,7 +4,7 @@ console.log('chapter3');
 // 3.1.3 オブジェクトリテラルのプロパティ名の指定方法
 
 // プロパティ名を文字列リテラルで指定する
-const obj = {
+export const obj = {
   one: 1,
   two: 2,
   'foo bar': -500,
