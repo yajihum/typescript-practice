@@ -112,7 +112,7 @@ const fooBar: FooBar = fooBarBaz; // FooBarBazはFooBarの部分型である
 
 // 3.4.1
 // 型引数を持つ型
-type User<T> = {
+type User2<T> = {
   name: string;
   child: T;
 };
@@ -215,3 +215,36 @@ const map = new Map<string, number>();
 map.set('foo', 123);
 console.log(map.get('foo')); // 123
 console.log(map.get('bar')); // undefined
+
+// 3.8 力試し
+type User = {
+  name: string;
+  age: number;
+  premiumUser: boolean;
+};
+
+const data: string = `
+uhyo,26,1
+John Smith,17,0
+Mary Sue,14,1
+`;
+
+const users: User[] = data
+  .split('\n')
+  .filter((line) => line.trim() !== '')
+  .map((line) => {
+    const [name, age, premiumUser] = line.split(',');
+    return {
+      name,
+      age: Number(age),
+      premiumUser: Boolean(Number(premiumUser)),
+    };
+  });
+
+for (const user of users) {
+  if (user.premiumUser) {
+    console.log(`${user.name}はプレミアム会員です`);
+  } else {
+    console.log(`${user.name}はプレミアム会員ではありません`);
+  }
+}
