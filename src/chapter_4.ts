@@ -4,10 +4,10 @@
 // 4.1.6
 // メソッド記法で関数を定義する
 const obj = {
-  double(num: number): number {
-    return num * 2;
-  },
-  double2: (num: number): number => num * 2,
+	double(num: number): number {
+		return num * 2;
+	},
+	double2: (num: number): number => num * 2,
 };
 console.log(obj.double(123));
 console.log(obj.double2(123));
@@ -18,7 +18,7 @@ console.log(obj.double2(123));
 // Typescriptではrest引数構文を使う
 // 型は必ず配列型である必要がある
 const sum = (...args: number[]): number => {
-  return args.reduce((result, num) => result + num, 0);
+	return args.reduce((result, num) => result + num, 0);
 };
 console.log(sum(1, 2, 3, 4, 5)); // 15
 
@@ -26,20 +26,19 @@ console.log(sum(1, 2, 3, 4, 5)); // 15
 const numbers = [1, 2, 3, 4, 5];
 console.log(sum(...numbers)); // これも可
 
-
 // 4.1.10
 // コールバック関数
 // コールバック関数とは引数として渡される関数のこと
 // た、コールバック関数を引数として受け取るような関数のことを高階関数と呼ぶ
 type User = {
-  name: string;
-  age: number;
+	name: string;
+	age: number;
 };
-const getName  = (u: User): string => u.name;
+const getName = (u: User): string => u.name;
 const users: User[] = [
-  { name: 'Taro', age: 10 },
-  { name: 'Hanako', age: 20 },
-  { name: 'Kenta', age: 30 },
+	{ name: "Taro", age: 10 },
+	{ name: "Hanako", age: 20 },
+	{ name: "Kenta", age: 30 },
 ];
 const names = users.map(getName); // getName関数をコールバック関数として渡している
 const names2 = users.map((u: User): string => u.name); // これでも可
@@ -55,15 +54,33 @@ const repeat: F = (num: number): string => "x".repeat(num);
 const repeat2: F = (num): string => "x".repeat(num); // 逆方向の推論（contextual typeing）
 const arr = [1, 2, 3].filter((n) => n % 2 === 0); // このnも方注釈が必要ないのはfilterの型定義により受け取るコールバック関数の方が判明しているから
 
-
 // 4.2.5
 // コールシグネチャによる関数型の宣言
 type MyFunc = {
-  isUsed?: boolean;
-  (arg: number): void;
-}
+	isUsed?: boolean;
+	(arg: number): void;
+};
 const myFunc: MyFunc = (arg: number): void => {
-  console.log(arg);
+	console.log(arg);
 };
 myFunc.isUsed = true;
 myFunc(1); // MyFunc型はisUsedプロパティを持つオブジェクトであると同時に、numberを受け取る関数でもある
+
+// 4.3.2
+// 引数の型による部分型関係
+type HasName = { name: string };
+type HasNameAndAge = HasName & { age: number };
+
+const showName = (arg: HasName) => arg.name;
+const g: (obj: HasNameAndAge) => void = showName; // HasNameAndAgeはHasNameの部分型なので代入可能
+console.log(g({ name: "Taro", age: 10 })); // gで定義している返り値はvoidだが、代入しているshowNameはstringを返すのも可能
+// これはvoid型だけ特殊で、どんな型を返す関数型も同じ引数を受け取ってvoid型を返す関数型の部分型となるため
+
+const f: (obj: HasName, num: number) => HasNameAndAge = (obj, num) => ({
+	name: obj.name,
+	age: num,
+});
+const g2: (obj: HasNameAndAge, num: number) => HasName = (obj, num) => ({
+	name: obj.name,
+});
+// 上記の引数の型は反変、返り値の型は共変の関係となる
