@@ -84,3 +84,67 @@ const g2: (obj: HasNameAndAge, num: number) => HasName = (obj, num) => ({
 	name: obj.name,
 });
 // 上記の引数の型は反変、返り値の型は共変の関係となる
+
+// 4.4.1
+// ジェネリクスとは型引数を受け取る関数をつくる機能のこと
+// ジェネリック関数は型引数を持つ関数のこと
+function repeat3<T>(element: T, length: number): T[] {
+	const resulet: T[] = [];
+	for (let i = 0; i < length; i++) {
+		resulet.push(element);
+	}
+	return resulet;
+}
+console.log(repeat3<number>(123, 3)); // [ 123, 123, 123 ]
+console.log(repeat3<string>("hello", 3)); // [ 'hello', 'hello', 'hello' ]
+
+// アロー関数の場合
+const repeat4 = <T>(element: T, length: number): T[] => {
+	const resulet: T[] = [];
+	for (let i = 0; i < length; i++) {
+		resulet.push(element);
+	}
+	return resulet;
+};
+
+// 部分型を使ったジェネリック型の定義
+const repeat5 = <T extends { name: string }>(
+	element: T,
+	length: number,
+): T[] => {
+	const resulet: T[] = [];
+	for (let i = 0; i < length; i++) {
+		resulet.push(element);
+	}
+	return resulet;
+};
+console.log(repeat5<HasNameAndAge>({ name: "Taro", age: 2 }, 3)); // [ { name: 'Taro' }, { name: 'Taro' }, { name: 'Taro' } ]
+
+// 4.6
+// 力試し
+const getFizzBuzzString = (num: number): string => {
+	if (num % 3 === 0 && num % 5 === 0) return "FizzBuzz";
+	if (num % 3 === 0) return "Fizz";
+	if (num % 5 === 0) return "Buzz";
+	return String(num);
+};
+
+const sequense = (start: number, end: number): number[] => {
+	const result: number[] = [];
+	for (let i = start; i <= end; i++) {
+		result.push(i);
+	}
+	return result;
+};
+console.log(sequense(1, 100).map(getFizzBuzzString));
+
+// 4.6.3
+function map<T, S>(array: T[], callback: (arg: T) => S): S[] {
+	const result: S[] = [];
+	for (const item of array) {
+		result.push(callback(item));
+	}
+	return result;
+}
+console.log(map([1, 2, 3], (item) => item * 2)); // [ 2, 4, 6 ]
+console.log(map([3, 5, 2], (item) => item > 4)); // [ false, true, false ]
