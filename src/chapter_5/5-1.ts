@@ -95,6 +95,10 @@ const User7 = class {
 		this.name = name;
 		this.age = age;
 	}
+
+	isAdult(): boolean {
+		return this.age >= 20;
+	}
 };
 const rorisu4 = new User7("rorisu", 5);
 console.log(rorisu4); // { name: 'rorisu', age: 5 }

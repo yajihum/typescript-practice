@@ -9,6 +9,7 @@
     "strict": true,
     "skipLibCheck": true,
     "isolatedModules": false
+    // "noImplicitOverride": true overrideを明示しないといけないオプション
   },
   "include": ["./src/**/*.ts"]
 }
