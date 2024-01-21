@@ -85,3 +85,69 @@ class User6 {
 		protected age: number,
 	) {}
 }
+
+// 5.1.8 クラス式でクラスを作成する
+const User7 = class {
+	name: string;
+	age: number;
+
+	constructor(name: string, age: number) {
+		this.name = name;
+		this.age = age;
+	}
+};
+const rorisu4 = new User7("rorisu", 5);
+console.log(rorisu4); // { name: 'rorisu', age: 5 }
+// クラス式の中ではprivateやprotectedなプロパティは使用不可なので基本的にはクラス宣言を使う
+
+// 5.1.9 #から始まるプライベートプロパティ
+class User8 {
+	name: string;
+	#age: number;
+
+	constructor(name: string, age: number) {
+		this.name = name;
+		this.#age = age;
+	}
+
+	isAdult(): boolean {
+		return this.#age >= 20;
+	}
+}
+const rorisu5 = new User8("rorisu", 5);
+//console.log(rorisu5.age); // エラー
+// #を使う場合はECMAScript独自の機能であるため、コンパイル後もprivateなものとして扱われるためより厳格なものになる
+
+// 5.1.10 クラスの静的初期化ブロック
+class User9 {
+	static adminUser: User9;
+	static {
+		User9.adminUser = new User9();
+		User9.adminUser.#age = 999;
+	}
+
+	#age = 0;
+	getAge(): number {
+		return this.#age;
+	}
+	setAge(age: number): void {
+		this.#age = age;
+	}
+}
+console.log(User9.adminUser); // User9 { #age: 999 } staticブロックであれば#ageを直接書き換えられる
+// staticブロックはクラス宣言の一部として使えるためprivateなプロパティにもアクセスできる
+
+// 5.1.11 型引数を持つクラス
+class User10<T> {
+	name: string;
+	#age: number;
+	readonly data: T;
+
+	constructor(name: string, age: number, data: T) {
+		this.name = name;
+		this.#age = age;
+		this.data = data;
+	}
+}
+const rorisu6 = new User10<string>("rorisu", 5, "hello");
+const rorisu7 = new User10("rorisu", 5, { id: 1 }); // 型推論もしてくれる
