@@ -10,6 +10,8 @@
     "skipLibCheck": true,
     "isolatedModules": false
     // "noImplicitOverride": true overrideを明示しないといけないオプション
+    // "noUncheckedIndexedAccess": true, // インデックスアクセスを厳しくする これと下のオプションはできれば有効にしたい
+    // "exactOptionalPropertyTypes": true, // オプショナルプロパティの型を厳しくする
   },
   "include": ["./src/**/*.ts"]
 }

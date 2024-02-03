@@ -3,6 +3,8 @@
 
 ## プログラムの実行
 ```
-pnpm tsc // src配下のtsファイルを全てコンパイル（tsconfig.jsonのincludeで指定）
-node dist/<ファイル名>.js // 任意のjsファイルを実行
+# src配下のtsファイルを全てコンパイル（tsconfig.jsonのincludeで指定）
+pnpm tsc
+# 任意のjsファイルを実行
+node dist/<ファイル名>.js
 ```
